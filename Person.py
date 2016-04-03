@@ -1,12 +1,14 @@
-import operator
+import operator, pprint
+
+THRESHOLD = 3
 
 class Person:
 	def __init__(self, name, _type, ID):
-		self.name       = name
-		self.type       = _type
-		self.ID         = ID
-		self.movies     = []
-		self.associates = {}
+		self.name           = name
+		self.type           = _type
+		self.ID             = ID
+		self.movies         = []
+		self.associates     = {}
 
 	def update_movies(self, movies):
 		self.movies.append(movies)
@@ -17,11 +19,11 @@ class Person:
 	def is_director(self):
 		return self.type == "with_crew"
 
-	def update_hash(self, key):
+	def update_hash(self, key, movie):
 		if key not in self.associates:
-			self.associates[key] = 1
-		else:
-			self.associates[key] += 1
+			self.associates[key] = []
+
+		self.associates[key].append(movie)
 
 	def combine_pages(self):
 		movies = []
@@ -31,4 +33,5 @@ class Person:
 		self.movies = movies
 
 	def sort_hash(self):
-		return sorted(self.associates.items(), key=operator.itemgetter(1))
+		self.associates = { key: value for key, value in self.associates.items() if len(value) >= THRESHOLD }
+		return self.associates
