@@ -63,18 +63,14 @@ class Person:
 				input and method
 	'''
 	def get_num_pages(self, url, api_key, method):
-		# try:
-			params = {
-				'api_key': api_key,
-				self.type: self.ID
-			}
+		params = {
+			'api_key': api_key,
+			self.type: self.ID
+		}
 
-			resp = requests.get(url=url + method, params=params)
-			data = json.loads(resp.content)
-			return data['total_pages']
-		# except:
-		# 	print "Couldn't get number of pages."
-		# 	sys.exit()
+		resp = requests.get(url=url + method, params=params)
+		data = json.loads(resp.content)
+		return data['total_pages']
 
 	'''
 		# Requires: A valid person type and his/her ID

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Movie Duos</title>
+	<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/css/home.css">
+</head>
+<body>
+	<h1>
+		Find the best Movie Duo out there!
+	</h1>
+	<div class="jumbotron">
+		<form method="POST" action="/">
+			<label for="inputName">Name</label>
+			<input type="name" name="inputName" id="inputName" class="form-control" placeholder="Famous Guy">
+			<label for="inputType">Type</label>
+			<div class="controls">
+				<input type="radio" name="inputType" value="a" class="form-control">Actor<br>
+				<input type="radio" name="inputType" value="d" class="form-control">Director<br>
+			</div>
+			<button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Go!</button>
+		</form>
+	</div>
+
+	<footer class="footer">
+		<p>&copy; Chuckry Vengadam 2016</p>
+	</footer>
+	<script src="https://code.jquery.com/jquery-2.2.0.min.js">
+    	$(function() {
+		    $('#btnSignUp').click(function() {
+		        $.ajax({
+		            url: '/',
+		            data: $('form').serialize(),
+		            type: 'POST',
+		            success: function(response) {
+		                console.log(response);
+		            },
+		            error: function(error) {
+		                console.log(error);
+		            }
+		        });
+		    });
+		});
+    </script>
+</body>
+</html>
