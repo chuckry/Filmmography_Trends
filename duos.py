@@ -56,10 +56,7 @@ def run(_name, _type):
 		ratings       = np.array(tomatoscores)
 		median_rating = np.median(ratings)
 		mean_rating   = np.mean(ratings)
-		avg_rating    = median_rating
-
-		person.associates[associate].append(median_rating)
-		person.associates[associate].append(mean_rating)
+		avg_rating    = mean_rating
 
 		# If current avg rating is better than current best, update best person/avg
 		if avg_rating >= best_avg:
@@ -69,7 +66,21 @@ def run(_name, _type):
 
 			best_person.append(associate)
 
-	return json.dumps({'Best Person': best_person, 'Average Rating': best_avg})
+	# Pack finished values into JSON-serializable format
+	films = {}
+	for collab in best_person:
+		if collab not in films:
+			films[collab] = []
+
+		for movie in person.associates[collab]:
+			films[collab].append([movie.title, movie.metascore, movie.tomatoes])
+
+	return json.dumps({
+		'Person': person.name,
+		'Best Collab': best_person,
+		'Avg Rating': best_avg,
+		'Films': films
+	})
 
 
 

@@ -1,8 +1,8 @@
 import sys, requests, json
 
 class Movie:
-	def __init__(self, name):
-		self.name      = name
+	def __init__(self, title):
+		self.title     = title
 		self.ID        = 0
 		self.metascore = 0
 		self.tomatoes  = 0
@@ -12,7 +12,7 @@ class Movie:
 	def find_ratings(self, url):
 		try:
 			params = {
-				't': self.name,
+				't': self.title,
 				'tomatoes': 'true'
 			}
 			resp = requests.get(url=url, params=params)
@@ -28,7 +28,7 @@ class Movie:
 
 	# Debugging purposes
 	def print_ratings(self):
-		print "-----", self.name, "-----"
+		print "-----", self.title, "-----"
 		print "IMDB:\t\t", self.imdb
 		print "Metacritic:\t", self.metascore
 		print "Rotten Tomatoes\t", self.tomatoes

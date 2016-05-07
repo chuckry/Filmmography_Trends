@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, json
+from Person import *
+from Movie import *
 import duos
 app = Flask(__name__)
 
