@@ -52,8 +52,9 @@ class Person:
 			resp = requests.get(url=url + 'search/person', params=params)
 			data = json.loads(resp.content)
 			self.ID = data['results'][0]['id']
+			return 1
 		except:
-			print "Person search failed."
+			return 0
 			sys.exit()
 
 	'''

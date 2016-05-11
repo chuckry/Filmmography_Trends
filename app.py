@@ -19,9 +19,13 @@ def entry():
 
 	# Validate information
 	if _name and _type:
-		return json.dumps(duos.run(_name, _type))
+		results = duos.run(_name, _type)
+		if json.loads(results)['Error'] == 1:
+			return "Couldn't find " + json.loads(results)['Person'] + "!"
+		else:
+			return results
 	else:
-		return json.dumps({'html':'<span>Complete required fields!</span>'})
+		return "Complete required fields!"
 
 if __name__ == "__main__":
 	app.debug = True

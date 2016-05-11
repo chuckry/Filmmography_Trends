@@ -23,7 +23,11 @@ def run(_name, _type):
 		t = 'with_crew' 
 
 	person = Person(_name, t)
-	person.get_person_ID(_name, tmdb, tmdb_key)
+	if person.get_person_ID(_name, tmdb, tmdb_key) == 0:
+		return json.dumps({
+			'Error': 1,
+			'Person': person.name
+		})
 
 	# Get hash of person's coworkers and their collaborative work
 	person.get_movie_list(tmdb, tmdb_key, person.get_movie_info(tmdb, tmdb_key))
@@ -79,7 +83,8 @@ def run(_name, _type):
 		'Person': person.name,
 		'Best Collab': best_person,
 		'Avg Rating': best_avg,
-		'Films': films
+		'Films': films,
+		'Error': 0
 	})
 
 

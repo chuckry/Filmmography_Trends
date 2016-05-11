@@ -16,3 +16,7 @@ form {
 	display: inline-block;
 	text-align: center;
 }
+
+.footer_text {
+	padding-left: 50px;
+}
