@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, json
 from Person import *
 from Movie import *
 import duos
+import graph
 app = Flask(__name__)
 
 # Sends user to homepage to enter their query
@@ -23,7 +24,7 @@ def entry():
 		if json.loads(results)['Error'] == 1:
 			return "Couldn't find " + json.loads(results)['Person'] + "!"
 		else:
-			return results
+			return graph.createGraph(json.loads(results))
 	else:
 		return "Complete required fields!"
 
