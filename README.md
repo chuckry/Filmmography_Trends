@@ -1,9 +1,14 @@
-HOLLYWOOD DUOS
+Welcome to Filmgraphy Trends! This applications aims to visualize the growth of Hollywood actors
+and directors by charting scores for all of their released films.
 
-This program takes as input the name of either an actor or director and
-returns this person's best collaborator. Specifically, if the input is an actor,
-the director with whom he/she made the most highly rated films will be returned.
+Simply enter a name, select their role as actor or director, and submit. A graph
+will appear to indicate their filmographic trend.
 
-- Given an actor and a genre, return the best movies fitting those criteria
+Other features will come out soon including:
+- Statistics about filmmaker's trends
+- Top 3 films, taken by avg of Meta/RTscores, complete with responsible director and poster art
+- Tailored summary of filmmaker performance
+- User Interface
+- Faster performance
 
-Still in progress.
+Thank you for using this application!
