@@ -14,29 +14,12 @@ class Person:
 	def update_movies(self, movies):
 		self.movies.append(movies)
 
-	def is_actor(self):
-		return self.type == "with_cast"
-	
-	def is_director(self):
-		return self.type == "with_crew"
-
-	def update_hash(self, key, movie):
-		if key not in self.associates:
-			self.associates[key] = []
-
-		m = Movie(movie)
-		self.associates[key].append(m)
-
 	def combine_pages(self):
 		movies = []
 		for page in self.movies:
 			for movie in page['results']:
 				movies.append(movie)
 		self.movies = movies
-
-	def sort_hash(self):
-		self.associates = { key: value for key, value in self.associates.items() if len(value) >= THRESHOLD }
-		return self.associates
 
 	'''
 	# Requires: A query string
@@ -96,53 +79,3 @@ class Person:
 				print "Movie search failed."
 				sys.exit()
 		self.combine_pages()
-
-	'''
-		# Requires: A valid person type (actor/director) and his/her ID
-		# Modifies: Nothing
-		# Effects:	Returns a list of given person's movies' [titles, IDs]
-	'''
-	def get_movie_info(self, url, api_key):
-		self.discover_person(url, api_key)
-		movie_list = []
-
-		# TODO: Write function to only append titles that have
-		# already been released by current date
-		for result in self.movies:
-			movie_list.append( [result['title'], result['id']] )
-		return movie_list
-
-	'''
-	# Requires: Movie info data for a person in the form [title, ID]
-	# Modifies: Nothing
-	# Effects: 	Returns dictionary of movie collaborators to a count of their
-				appearances in all the person's movies
-	'''
-	def get_movie_list(self, url, api_key, movie_info):
-		for movie in movie_info:
-			try:
-				params = {
-					'api_key': api_key
-				}
-				resp = requests.get(url=url + "movie/" + str(movie[1]) + "/credits",
-					params=params)
-				details = json.loads(resp.content)
-
-				# Iterate through each member of the crew and increment
-				# this director's count
-				if self.is_actor():
-					for member in details['crew']:
-						if member['job'] == "Director":
-							if member['name'] == self.name:
-								continue
-							else:
-								self.update_hash(member['name'], movie[0])
-				elif self.is_director():
-					for actor in details['cast']:
-						if actor['name'] == self.name:
-							continue
-						else:
-							self.update_hash(actor['name'], movie[0])
-			except:
-				print details['status_code'],": ",details['status_message']
-				return

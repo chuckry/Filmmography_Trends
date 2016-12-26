@@ -1,56 +1,76 @@
 import plotly.plotly as py
 import plotly.tools as tls
 import plotly.graph_objs as go
+import pprint
 
 username = 'chuckry'
 api_key  = '799l3tg6mq'
 tls.set_credentials_file(username=username, api_key=api_key)
 
+MONTH_LENGTHS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+# Returns a boolean denoting whether the given year is a leap year or not
+def isLeapYear(year):
+	return year % 4 == 0 and not (year % 100 == 0 and year % 400 != 0)
+
+# Converts a slash-delimited date into a float
+def dateScore(date):
+	if date.find('/') == -1:
+		"Incorrect date format."
+		exit(1)
+
+	month, day, year = map(float, date.split('/'))
+	monthBuffer = sum(MONTH_LENGTHS[x] for x in xrange(0, int(month) - 1))
+	monthBuffer += 1 if isLeapYear(year) and month == 2 else 0
+	return year + (monthBuffer + day) / 365.0
+
+# Creates a graph to visualize the given celebrity's film scores
 def createGraph(data):
-
 	traces = []
-	partners = []
-	phrase = ""
+	releaseDates = []
+	rtScores     = []
+	metaScores   = []
+	titles       = []
 
-	for partner in data['Films']:
-		x      = []
-		y      = []
-		titles = []
-		val    = 1
-		partners.append(partner)
+	for film in data['Films']:
+		film[3] = dateScore(film[3])
 
-		for films in data['Films'][partner]:
-			x.append(val)
-			titles.append(films[0])
-			y.append(films[2])
-			val += 1
+	data['Films'].sort(key=lambda x: x[3])
 
-		traces.append(go.Scatter(
-			x = x,
-			y = y,
-			mode = "lines+markers",
-			name = partner,
-			text = titles
-		))
+	for film in data['Films']:
+		if 'N/A' in film:
+			continue
+		titles.append(film[0])
+		rtScores.append(film[1])
+		metaScores.append(film[2])
+		releaseDates.append(film[3])
 
-	if len(partners) > 1:
-		for partner in partners:
-			phrase += partner + ", "
-		phrase = phrase[:-2]
-	else:
-		phrase = str(partners[0])
+	traces.append(go.Scatter(
+		x = releaseDates,
+		y = rtScores,
+		mode = "lines+markers",
+		name = 'Tomatoscore',
+		text = titles
+	))
+
+	traces.append(go.Scatter(
+		x = releaseDates,
+		y = metaScores,
+		mode = "lines+markers",
+		name = 'Metascore',
+		text = titles
+	))
 
 	layout = go.Layout(
-		title=data['Person'] + " and " + phrase,
+		title = data['Person'] + ": " + data['Type'],
 		xaxis = {
 			'title': 'Date of Release'
 		},
 		yaxis = {
-			'title': 'Tomatoscore'
+			'title': 'Rating'
 		}
 	)
 
 	figure = go.Figure(data=traces, layout=layout)
-	plot_url = py.plot(figure, filename='Film Pairs', auto_open=False)
-
+	plot_url = py.plot(figure, filename='Filmography', auto_open=False)
 	return tls.get_embed(plot_url)

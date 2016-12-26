@@ -3,6 +3,7 @@ from Person import *
 from Movie import *
 import duos
 import graph
+import pprint
 app = Flask(__name__)
 
 # Sends user to homepage to enter their query
@@ -20,11 +21,12 @@ def entry():
 
 	# Validate information
 	if _name and _type:
-		results = duos.run(_name, _type)
-		if json.loads(results)['Error'] == 1:
+		results = json.loads(duos.run(_name, _type))
+		if results['Error'] == 1:
 			return "Couldn't find " + json.loads(results)['Person'] + "!"
 		else:
-			return graph.createGraph(json.loads(results))
+			pprint.pprint(results)
+			return graph.createGraph(results)
 	else:
 		return "Complete required fields!"
 
