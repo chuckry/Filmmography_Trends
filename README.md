@@ -1,3 +1,5 @@
+# Filmography Trends
+
 Welcome to Filmgraphy Trends! This applications aims to visualize the growth of Hollywood actors
 and directors by charting scores for all of their released films.
 
