@@ -5,10 +5,19 @@
 	<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../static/css/home.css">
+    <script language="JavaScript">
+		function selectAll(source) {
+			var checkboxes = document.getElementsByName('check');
+			console.log(checkboxes)
+			for (var i = 0, n = checkboxes.length; i < n; i++) {
+				checkboxes[i].checked = source.checked;
+			}
+		}
+	</script>
 </head>
 <body>
 	<h1>
-		Find your Film Pair!
+		Filmography Trends
 	</h1>
 	<div class="jumbotron">
 		<form method="POST" action="/">
@@ -19,6 +28,38 @@
 				<input type="radio" name="inputType" value="a" class="form-control">Actor<br>
 				<input type="radio" name="inputType" value="d" class="form-control">Director<br>
 			</div>
+			<label for="check">Filter by Genre</label>
+			<div id="exclusivity">
+				<input type="radio" name="exclusivity" value="and">AND<br>
+				<input type="radio" name="exclusivity" value="or">OR<br>
+			</div>
+			<div id="checklist">
+				<label><input type="checkbox" onchange="selectAll(this)" class="checkbox"/>Select All</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Action">Action</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Adventure">Adventure</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Animation">Animation</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Biography">Biography</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Comedy">Comedy</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Crime">Crime</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Documentary">Documentary</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Drama">Drama</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Family">Family</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Fantasy">Fantasy</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Film-Noir">Film-Noir</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="History">History</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Horror">Horror</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Music">Music</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Musical">Musical</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Mystery">Mystery</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Romance">Romance</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Sci-Fi">Sci-Fi</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Sport">Sport</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Thriller">Thriller</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="War">War</label>
+				<label><input type="checkbox" name="check" class="checkbox" value="Western">Western</label>
+			</div>
+			<label for="inputName">Max Runtime</label>
+			<input type="name" name="runtime" id="runtime" class="form-control" placeholder="0">
 			<button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Go!</button>
 		</form>
 	</div>

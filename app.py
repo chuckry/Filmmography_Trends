@@ -18,14 +18,17 @@ def entry():
 	# Read posted values
 	_name = request.form['inputName']
 	_type = request.form['inputType']
+	_excl = request.form['exclusivity']
+	_genres = request.form.getlist('check')
+	_runtime = request.form['runtime']
 
 	# Validate information
 	if _name and _type:
-		results = json.loads(duos.run(_name, _type))
+		results = json.loads(duos.run(_name, _type, _excl, _genres, _runtime))
 		if results['Error'] == 1:
 			return "Couldn't find " + json.loads(results)['Person'] + "!"
 		else:
-			pprint.pprint(results)
+			# pprint.pprint(results)
 			return graph.createGraph(results)
 	else:
 		return "Complete required fields!"
