@@ -1,5 +1,4 @@
 from Person import *
-from Movie import *
 import sys, pprint
 import numpy as np
 

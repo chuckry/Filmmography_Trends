@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, json
 from Person import *
-from Movie import *
 import duos
 import graph
 import pprint

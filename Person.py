@@ -1,4 +1,3 @@
-from Movie import *
 import operator, pprint, sys, requests, json
 
 THRESHOLD = 3
